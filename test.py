@@ -1,28 +1,27 @@
-from pathlib import Path
-from shutil import copy
+# TODO: Move it to a proper unit test suite
+# import unittest
+# class TestStringMethods(unittest.TestCase):
 
-i = 0
+from models import Colors
+from models import Annotation
+from models import Minimap
 
-for path in Path('images/pm_apk').rglob('**/*.xml'):
-    print(path)
-    # copy(path, f"images/apk_ui/{path.name}")
-    i+=1
-    print(i)
+def main():
+    legend = [
+        Annotation('warpable', Colors.BLUE),
+        Annotation('catchable', Colors.MAGENTA, weight=2),
+        Annotation('consumable', Colors.ORANGE, weight=10),
+    ]
+    m = Minimap.load('images/d1_minimap_annotated.jpg', 'Mortyland', legend)
+    # m.map_width = m.map_width * 2 
+    # m.grid.warpable.locations = []
+    # m.grid.annotations = {}
+    # m.save('images/minimap.jpg')
+    m.show(True)
+    m.grid.warpable.locations = []
+    m.map = None
+    m.show(True)
+    # Minimap.load('images/d1_minimap_annotated.jpg','Mortyland', legend).show(True)
+    pass
 
-    import cv2
-
-# image = cv2.imread('1.jpg')
-# gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-# blur = cv2.GaussianBlur(gray, (5,5), 0)
-# thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-
-# cnts = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-# for c in cnts:
-#     area = cv2.contourArea(c)
-#     if area > 10000:
-#         cv2.drawContours(image, [c], -1, (36,255,12), 3)
-
-# cv2.imwrite('thresh.png', thresh)
-# cv2.imwrite('image.png', image)
-# cv2.waitKey()
+main()
